@@ -47,12 +47,16 @@ class _MyHomePageState extends State<MyHomePage> {
   int daysCount;
   DateTime today;
   int todayDays;
+//  List<Color> bgColorForMonth = []
+  Color colorForOdd = Colors.white;
+  Color colorForEven = Colors.grey;
+  Color colorForToday = Colors.yellow;
 
   @override
   void initState() {
     // TODO: implement initState
-//    today = DateTime.now();
-    today = DateTime(2019, 1, 35);
+    today = DateTime.now();
+//    today = DateTime(2019, 1, 35);
     daysCount = DateTime(today.year + 1, 1, 1)
         .difference(DateTime(today.year, 1, 1))
         .inDays;
@@ -74,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('Today is day $todayDays of the year'),
       ),
       body: SafeArea(
         child: GridView.count(
@@ -86,14 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: List<GridTile>.generate(
             daysCount,
             (index) {
-              Color bgColor = Colors.grey;
-              print('test this $index');
-              print('today days is $todayDays');
+              Color bgColor = colorForOdd;
+              if (index % 2 == 0) {
+                bgColor = colorForEven;
+              }
               if (index == todayDays) {
-                print('again today days is $todayDays');
-                bgColor = Colors.yellow;
-              } else if (index > todayDays) {
-                bgColor = Colors.white;
+                bgColor = colorForToday;
               }
 
               return GridTile(
