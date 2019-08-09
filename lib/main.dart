@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Whole Year In a Page',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.grey,
       ),
       home: MyHomePage(),
     );
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         preferredSize: Size.fromHeight(28.0),
         child: AppBar(
           title: Text(
-            'Today is day $todayDays of the year',
+            'Today is day ${todayDays + 1} of the year',
             style: TextStyle(
               fontSize: 15,
             ),
@@ -91,19 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: bgColor,
                     border: Border.all(color: borderColor),
                   ),
-                  child: index == todayDays
-                      ? Center(
-                          child: Text(
-                            '${todayDays + 1}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Color.fromARGB(255, 47, 61, 72),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                      : null,
+//                  child: index == todayDays
+//                      ? Center(
+//                          child: Text(
+//                            '${todayDays + 1}',
+//                            textAlign: TextAlign.center,
+//                            style: TextStyle(
+//                              fontSize: 10,
+//                              color: Color.fromARGB(255, 47, 61, 72),
+//                              fontWeight: FontWeight.bold,
+//                            ),
+//                          ),
+//                        )
+//                      : null,
                 ),
               );
             },
