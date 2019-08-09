@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Whole Year In a Page',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -18,15 +18,15 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.teal,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -37,8 +37,6 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -48,14 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
   DateTime today;
   int todayDays;
 //  List<Color> bgColorForMonth = []
-  Color colorForOdd = Colors.white;
-  Color colorForEven = Colors.white;
-  Color colorForToday = Colors.yellow;
-  Color colorForPast = Colors.grey;
+  Color colorForToday = Color.fromARGB(255, 56, 198, 182);
+  Color colorForPast = Color.fromARGB(255, 39, 52, 61);
+  Color colorForFuture = Color.fromARGB(255, 145, 158, 167);
 
-  Color borderColorForPast = Colors.white;
-  Color borderColorForFuture = Colors.grey;
-  Color borderColorForToday = Colors.white;
+  Color borderColorForPast = Color.fromARGB(255, 47, 61, 72);
+  Color borderColorForFuture = Color.fromARGB(255, 47, 61, 72);
+  Color borderColorForToday = Color.fromARGB(255, 47, 61, 72);
+
+  int _crossAxisCount = 15;
 
   @override
   void initState() {
@@ -104,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //      ),
       body: SafeArea(
         child: GridView.count(
-          crossAxisCount: 15,
+          crossAxisCount: _crossAxisCount,
           childAspectRatio: 1.0,
           padding: const EdgeInsets.all(4.0),
           mainAxisSpacing: 0.0,
@@ -120,11 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderColor = borderColorForToday;
               } else if (index > todayDays) {
                 borderColor = borderColorForFuture;
-                if (index % 2 == 0) {
-                  bgColor = colorForEven;
-                } else {
-                  bgColor = colorForOdd;
-                }
+                bgColor = colorForFuture;
               }
 
               return GridTile(
@@ -138,7 +133,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Text(
                             '${todayDays + 1}',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Color.fromARGB(255, 47, 61, 72),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       : null,
