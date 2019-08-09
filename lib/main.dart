@@ -44,17 +44,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int daysCount;
+  DateTime today;
+  int todayDays;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+//    today = DateTime.now();
+    today = DateTime(2019, 1, 35);
+    daysCount = DateTime(today.year + 1, 1, 1)
+        .difference(DateTime(today.year, 1, 1))
+        .inDays;
+    todayDays = today.difference(DateTime(today.year, 1, 1)).inDays;
+    print(today.day);
+    print(daysCount);
+    super.initState();
   }
 
   @override
@@ -73,27 +78,34 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SafeArea(
         child: GridView.count(
-          crossAxisCount: 10,
+          crossAxisCount: 15,
           childAspectRatio: 1.0,
           padding: const EdgeInsets.all(4.0),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-          children: <String>[
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-            'https://www.google.com.sg/logos/doodles/2019/singapore-national-day-2019-5096755438813184-law.gif',
-          ].map((String url) {
-            return new GridTile(
-                child: new Image.network(url, fit: BoxFit.cover));
-          }).toList(),
+          mainAxisSpacing: 0.0,
+          crossAxisSpacing: 0.0,
+          children: List<GridTile>.generate(
+            daysCount,
+            (index) {
+              Color bgColor = Colors.grey;
+              print('test this $index');
+              print('today days is $todayDays');
+              if (index == todayDays) {
+                print('again today days is $todayDays');
+                bgColor = Colors.yellow;
+              } else if (index > todayDays) {
+                bgColor = Colors.white;
+              }
+
+              return GridTile(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    border: Border.all(color: Colors.blueAccent),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
