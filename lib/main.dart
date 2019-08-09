@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -49,8 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   int todayDays;
 //  List<Color> bgColorForMonth = []
   Color colorForOdd = Colors.white;
-  Color colorForEven = Colors.grey;
+  Color colorForEven = Colors.white;
   Color colorForToday = Colors.yellow;
+  Color colorForPast = Colors.grey;
+
+  Color borderColorForPast = Colors.white;
+  Color borderColorForFuture = Colors.grey;
+  Color borderColorForToday = Colors.white;
 
   @override
   void initState() {
@@ -75,11 +80,28 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text('Today is day $todayDays of the year'),
-      ),
+//      appBar: AppBar(
+//        // Here we take the value from the MyHomePage object that was created by
+//        // the App.build method, and use it to set our appbar title.
+////        title: Text('Today is day $todayDays of the year'),
+////        title: RichText(
+////          text: TextSpan(
+////            text: 'Today is day ',
+////            children: <TextSpan>[
+////              TextSpan(
+////                text: '$todayDays',
+////                style: TextStyle(
+////                  color: Colors.yellow,
+////                  fontWeight: FontWeight.bold,
+////                ),
+////              ),
+////              TextSpan(
+////                text: ' of the year',
+////              ),
+////            ],
+////          ),
+////        ),
+//      ),
       body: SafeArea(
         child: GridView.count(
           crossAxisCount: 15,
@@ -90,20 +112,36 @@ class _MyHomePageState extends State<MyHomePage> {
           children: List<GridTile>.generate(
             daysCount,
             (index) {
-              Color bgColor = colorForOdd;
-              if (index % 2 == 0) {
-                bgColor = colorForEven;
-              }
+              Color bgColor = colorForPast;
+              Color borderColor = borderColorForPast;
+
               if (index == todayDays) {
                 bgColor = colorForToday;
+                borderColor = borderColorForToday;
+              } else if (index > todayDays) {
+                borderColor = borderColorForFuture;
+                if (index % 2 == 0) {
+                  bgColor = colorForEven;
+                } else {
+                  bgColor = colorForOdd;
+                }
               }
 
               return GridTile(
                 child: Container(
                   decoration: BoxDecoration(
                     color: bgColor,
-                    border: Border.all(color: Colors.blueAccent),
+                    border: Border.all(color: borderColor),
                   ),
+                  child: index == todayDays
+                      ? Center(
+                          child: Text(
+                            '${todayDays + 1}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        )
+                      : null,
                 ),
               );
             },
